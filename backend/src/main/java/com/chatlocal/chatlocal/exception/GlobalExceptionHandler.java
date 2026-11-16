@@ -9,20 +9,31 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Format d'erreur commun, conforme à docs/API.md :
+ * { "status": 400, "erreur": "message", "champs": { ... } }
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<Map<String, Object>> handleApi(ApiException e) {
-        return ResponseEntity.status(e.getStatus()).body(Map.of("message", e.getMessage()));
+        Map<String, Object> corps = new LinkedHashMap<>();
+        corps.put("status", e.getStatus().value());
+        corps.put("erreur", e.getMessage());
+        return ResponseEntity.status(e.getStatus()).body(corps);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException e) {
-        Map<String, String> erreurs = new LinkedHashMap<>();
+        Map<String, String> champs = new LinkedHashMap<>();
         e.getBindingResult().getFieldErrors()
-                .forEach(f -> erreurs.put(f.getField(), f.getDefaultMessage()));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(Map.of("message", "Données invalides", "erreurs", erreurs));
+                .forEach(f -> champs.put(f.getField(), f.getDefaultMessage()));
+
+        Map<String, Object> corps = new LinkedHashMap<>();
+        corps.put("status", HttpStatus.BAD_REQUEST.value());
+        corps.put("erreur", "Données invalides");
+        corps.put("champs", champs);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(corps);
     }
 }
