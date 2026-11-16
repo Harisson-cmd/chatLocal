@@ -21,9 +21,6 @@ public abstract class Utilisateur {
     @Column(nullable = false, length = 100)
     private String nom;
 
-    @Column(nullable = false, length = 100)
-    private String prenom;
-
     @Column(length = 100)
     private String filiere;
 
@@ -58,9 +55,6 @@ public abstract class Utilisateur {
 
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
-
-    public String getPrenom() { return prenom; }
-    public void setPrenom(String prenom) { this.prenom = prenom; }
 
     public String getFiliere() { return filiere; }
     public void setFiliere(String filiere) { this.filiere = filiere; }
