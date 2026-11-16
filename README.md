@@ -70,3 +70,16 @@ Le code est organisé par couche, dans le package `cm.chatlocal` :
 | Loïc | Backend : documents |
 | Vidouelle | Backend : base de données |
 | Bill | Backend : fiabilité, déploiement et documentation |
+
+Créer la base et l'utilisateur PostgreSQL (une fois par machine) :
+
+    CREATE USER chatlocal WITH PASSWORD 'votre_mot_de_passe';
+    CREATE DATABASE chatlocal OWNER chatlocal;
+
+Variable d'environnement obligatoire :
+
+| Variable | Rôle | Valeur par défaut |
+|---|---|---|
+| `DB_PASSWORD` | Mot de passe de l'utilisateur `chatlocal` | aucune |
+| `DB_URL` | URL JDBC de la base | `jdbc:postgresql://localhost:5432/chatlocal` |
+| `DB_USER` | Utilisateur de la base | `chatlocal` |
