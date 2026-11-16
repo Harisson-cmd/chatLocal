@@ -1,4 +1,4 @@
-package com.chatLocal.chatLocal;
+package com.chatlocal.chatlocal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
