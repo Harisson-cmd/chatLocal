@@ -26,7 +26,21 @@ Prérequis : Java 21, PostgreSQL.
 2. Définir les variables d'environnement de connexion à la base (voir la liste ci-dessous).
 3. Depuis le dossier `backend/`, lancer l'application avec Maven.
 
-Variables d'environnement : *à compléter*
+Créer la base et l'utilisateur PostgreSQL (une fois par machine) :
+
+    CREATE USER chatlocal WITH PASSWORD 'votre_mot_de_passe';
+    CREATE DATABASE chatlocal OWNER chatlocal;
+
+Variables d'environnement à ajouter dans `~/.bashrc` :
+
+| Variable | Rôle | Valeur par défaut |
+|---|---|---|
+| `DB_PASSWORD` | Mot de passe de l'utilisateur de la base | aucune (obligatoire) |
+| `JWT_SECRET` | Clé de signature des jetons, longue et aléatoire | aucune (obligatoire) |
+| `DB_NAME` | Nom de la base | `chatlocal` |
+| `DB_USER` | Utilisateur de la base | `chatlocal` |
+
+Générer un secret JWT : `openssl rand -base64 48`
 
 ## Structure du backend
 
